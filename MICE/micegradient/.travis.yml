@@ -1,0 +1,26 @@
+language: python
+
+cache:
+  apt: true
+  directories:
+  - $HOME/.cache/pip
+  - $HOME/download
+warnings_are_errors: false
+python:
+  - "3.6"
+  - "3.7"
+  - "3.8"
+  - "3.9"
+before_install:
+  - pip install pip -U
+  - pip install pytest -U
+  - pip install pytest-cov -U
+  - pip install codecov -U
+  - pip install mypy -U
+install:
+  - travis_retry pip install -e .
+script: 
+  - travis_wait pytest tests --cov-config .coveragerc --cov=miceforest
+  - travis_wait mypy miceforest
+after_success:
+  - codecov

@@ -1,9 +1,3 @@
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
-# DeepIFSA
-=======
->>>>>>> a13f22d... DeepIFSAC pipeline [OpenML]
 # 1. DeepIFSAC
 
 **DeepIFSAC** is a deep learning framework for tabular data that leverages attention-based architecture within a contrastive learning framework for missing value imputation. This repository provides code for data processing, training the DeepIFSAC model for missing value imputation on Tabular data set and a real-world EHR data set.

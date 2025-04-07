@@ -1,3 +1,9 @@
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+# DeepIFSA
+=======
+>>>>>>> a13f22d... DeepIFSAC pipeline [OpenML]
 # 1. DeepIFSAC
 
 **DeepIFSAC** is a deep learning framework for tabular data that leverages attention-based architecture within a contrastive learning framework for missing value imputation. This repository provides code for data processing, training the DeepIFSAC model for missing value imputation on Tabular data set and a real-world EHR data set.
@@ -95,8 +101,13 @@ python my_train.py \
   --task multiclass \
   --attentiontype colrow \
   --pretrain \
+<<<<<<< HEAD
   --pretrain_epochs 1 \
   --epochs 2 \
+=======
+  --pretrain_epochs 1000 \
+  --epochs 200 \
+>>>>>>> a13f22d... DeepIFSAC pipeline [OpenML]
   --batchsize 128 \
   --dset_seed 0 \
   --cuda_device 0 \
@@ -121,18 +132,32 @@ DeepIFSAC/
 │   ├── my_data_prep_openml.py      # Data processing and loading from OpenML.
 │   └── ...
 ├── models
+<<<<<<< HEAD
 │   ├── deepifsac.py                # Implementation of the DeepIFSAC model.
 │   ├── model.py                    # Additional models (e.g., simple_MLP).
 │   └── ...
 ├── pretraining
 │   └── DeepIFSAC_pretrain.py       # Pretraining functions for DeepIFSAC.
+=======
+│   ├── pretrainmodel.py                # Implementation of the DeepIFSAC model.
+│   ├── model.py                    # Additional models (e.g., simple_MLP).
+│   └── ...
+>>>>>>> a13f22d... DeepIFSAC pipeline [OpenML]
 ├── utils
 │   └── ...                         # Helper functions for training, evaluation, etc.
 ├── augmentations
 │   └── ...                         # Data augmentation routines.
+<<<<<<< HEAD
+=======
+├── pretrainig.py       # Pretraining functions for DeepIFSAC.
+>>>>>>> a13f22d... DeepIFSAC pipeline [OpenML]
 ├── my_train.py                     # Main training script.
 ├── environment.yaml                # Environment configuration file.
 └── README.md                       # This file.
 ```
 
 ---
+<<<<<<< HEAD
+=======
+>>>>>>> Initial commit: Add readme.md
+>>>>>>> a13f22d... DeepIFSAC pipeline [OpenML]

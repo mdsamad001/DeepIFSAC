@@ -1,0 +1,61 @@
+exclude: ^(docs/logos|pymc3/tests/data)/
+repos:
+- repo: https://github.com/pre-commit/pre-commit-hooks
+  rev: v3.4.0
+  hooks:
+    -   id: check-merge-conflict
+    -   id: check-toml
+    -   id: check-yaml
+    -   id: debug-statements
+    -   id: end-of-file-fixer
+    -   id: no-commit-to-branch
+        args: [--branch, master]
+    -   id: requirements-txt-fixer
+        exclude: ^requirements-dev\.txt$
+    -   id: trailing-whitespace
+- repo: https://github.com/PyCQA/isort
+  rev: 5.8.0
+  hooks:
+    - id: isort
+      name: isort
+- repo: https://github.com/asottile/pyupgrade
+  rev: v2.11.0
+  hooks:
+    - id: pyupgrade
+      args: [--py37-plus]
+- repo: https://github.com/psf/black
+  rev: 20.8b1
+  hooks:
+    - id: black
+- repo: https://github.com/PyCQA/pylint
+  rev: pylint-2.7.4
+  hooks:
+    - id: pylint
+      args: [--rcfile=.pylintrc]
+      files: ^pymc3/
+- repo: local
+  hooks:
+    - id: check-no-tests-are-ignored
+      entry: python scripts/check_all_tests_are_covered.py
+      files: ^\.github/workflows/pytest\.yml$
+      language: python
+      name: Check no tests are ignored
+      pass_filenames: false
+    - id: conda-env-sort
+      additional_dependencies: [pyyaml]
+      entry: python scripts/sort_conda_envs.py
+      files: ^conda-envs/environment-dev-py37\.yml$
+      language: python
+      name: Sort dependencies in conda envs
+      types: [yaml]
+    - id: pip-from-conda
+      additional_dependencies: [pyyaml]
+      entry: python scripts/generate_pip_deps_from_conda.py
+      files: ^conda-envs/
+      language: python
+      name: Generate pip dependency from conda
+    - id: no-relative-imports
+      name: No relative imports
+      entry: from \.[\.\w]* import
+      types: [python]
+      language: pygrep

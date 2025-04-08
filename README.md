@@ -20,7 +20,7 @@
 
 ## 3. Overview
 
-DeepIFSAC is designed to work with tabular datasets (e.g., from OpenML). It supports various tasks such as multiclass classification, binary classification, and regression. The model implements both a **pretraining phase** (with options for contrastive and denoising tasks) and a **finetuning phase** that trains downstream classifiers.
+DeepIFSAC is designed to work with tabular datasets (e.g., from OpenML). The model implements both a **pretraining phase** (with options for contrastive and denoising modules along with advanced data augmentations like CutMix and MixUp) and a **finetuning phase** that trains downstream classifiers.
 
 ---
 
@@ -54,13 +54,13 @@ The code leverages a dataset loading function (`my_data_prep_openml`) located in
 
 ## 6. Training the Model
 
-The training process is divided into two main phases: **pretraining** and **downstream finetuning**.
+The training process is divided into two main phases: **pretraining (Imputation)** and **downstream finetuning (Classification)**.
 
-### 6.1 Pretraining
+### 6.1 Pretraining (Imputation)
 
 DeepIFSAC can be pretrained using various objectives (e.g., denoising, contrastive loss). To run pretraining, set the `--pretrain` flag and specify additional parameters (like number of pretrain epochs, augmentation type, missing rate, etc.). The pretraining function (`DeepIFSAC_pretrain`) takes care of data augmentation, computes losses over epochs, and saves training metrics.
 
-### 6.2 Finetuning/Downstream Evaluation
+### 6.2 Finetuning/Downstream Evaluation (Classification)
 
 After pretraining, the model can be finetuned on a downstream task. The repository supports:
 

@@ -317,7 +317,7 @@ def main():
     feature_variances = torch.where(torch.var(all_original_data_test, dim=0) == 0,
                                     torch.ones_like(torch.var(all_original_data_test, dim=0)),
                                     torch.var(all_original_data_test, dim=0))
-    nrmse_con = torch.sqrt(torch.mean(mse_con / feature_variances))
+    nrmse_con = torch.mean(torch.sqrt(mse_con) / feature_variances)
     nrmse_cat = torch.tensor(0)
 
     print('NRMSE for Continuous Features on the Test set:', nrmse_con.item())

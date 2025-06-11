@@ -1,4 +1,5 @@
 # 1. DeepIFSAC
+This is the official implementation of paper titled, "DeepIFSAC: Deep Imputation of Missing Values Using Feature and Sample Attention within Contrastive Framework".
 
 **DeepIFSAC** is a deep learning framework for tabular data that leverages attention-based architecture within a contrastive learning framework for missing value imputation. This repository provides code for data processing, training the DeepIFSAC model for missing value imputation on Tabular data set and a real-world EHR data set.
 
@@ -20,7 +21,7 @@
 
 ## 3. Overview
 
-DeepIFSAC is designed to work with tabular datasets (e.g., from OpenML). It supports various tasks such as multiclass classification, binary classification, and regression. The model implements both a **pretraining phase** (with options for contrastive and denoising tasks) and a **finetuning phase** that trains downstream classifiers.
+DeepIFSAC is designed to work with tabular datasets (e.g., from OpenML). The model implements both a **pretraining phase** (with options for contrastive and denoising modules along with advanced data augmentations like CutMix and MixUp) and a **finetuning phase** that trains downstream classifiers.
 
 ---
 
@@ -54,13 +55,13 @@ The code leverages a dataset loading function (`my_data_prep_openml`) located in
 
 ## 6. Training the Model
 
-The training process is divided into two main phases: **pretraining** and **downstream finetuning**.
+The training process is divided into two main phases: **pretraining (Imputation)** and **downstream finetuning (Classification)**.
 
-### 6.1 Pretraining
+### 6.1 Pretraining (Imputation)
 
 DeepIFSAC can be pretrained using various objectives (e.g., denoising, contrastive loss). To run pretraining, set the `--pretrain` flag and specify additional parameters (like number of pretrain epochs, augmentation type, missing rate, etc.). The pretraining function (`DeepIFSAC_pretrain`) takes care of data augmentation, computes losses over epochs, and saves training metrics.
 
-### 6.2 Finetuning/Downstream Evaluation
+### 6.2 Finetuning/Downstream Evaluation (Classification)
 
 After pretraining, the model can be finetuned on a downstream task. The repository supports:
 
@@ -88,21 +89,22 @@ After finetuning, the performance of both the classical classifiers (LR, GBT) an
 ## 8. Usage Examples
 
 To train the DeepIFSAC model with pretraining for a multiclass task on dataset ID 11, run:
-
+For DeepIFSAC with contrastive --attentiontype = colorow which takes default pt_tasks = ['denoising', 'contrastive'] and for DeepIFSAC without contrastive, --attentiontype = colorowstt with pt_tasks = ['denoising']
 ```bash
 python my_train.py \
   --dset_id 11 \
   --task multiclass \
   --attentiontype colrow \
   --pretrain \
-  --pretrain_epochs 1 \
-  --epochs 2 \
+  --pretrain_epochs 1000 \
+  --epochs 200 \
   --batchsize 128 \
   --dset_seed 0 \
   --cuda_device 0 \
   --use_default_model \
   --missing_rate 0.5 \
-  --missing_type mcar
+  --missing_type mcar \
+  --pt_aug cutmix
 ```
 
 Adjust parameters as needed. Refer to the command-line argument help for more details:
@@ -121,18 +123,15 @@ DeepIFSAC/
 │   ├── my_data_prep_openml.py      # Data processing and loading from OpenML.
 │   └── ...
 ├── models
-│   ├── deepifsac.py                # Implementation of the DeepIFSAC model.
+│   ├── pretrainmodel.py                # Implementation of the DeepIFSAC model.
 │   ├── model.py                    # Additional models (e.g., simple_MLP).
 │   └── ...
-├── pretraining
-│   └── DeepIFSAC_pretrain.py       # Pretraining functions for DeepIFSAC.
 ├── utils
 │   └── ...                         # Helper functions for training, evaluation, etc.
 ├── augmentations
 │   └── ...                         # Data augmentation routines.
+├── pretraining.py       # Pretraining functions for DeepIFSAC.
 ├── my_train.py                     # Main training script.
 ├── environment.yaml                # Environment configuration file.
 └── README.md                       # This file.
 ```
-
----

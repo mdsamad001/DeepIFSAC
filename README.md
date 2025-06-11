@@ -89,7 +89,7 @@ After finetuning, the performance of both the classical classifiers (LR, GBT) an
 ## 8. Usage Examples
 
 To train the DeepIFSAC model with pretraining for a multiclass task on dataset ID 11, run:
-
+For DeepIFSAC with contrastive --attentiontype = colorow which takes default pt_tasks = ['denoising', 'contrastive'] and for DeepIFSAC without contrastive, --attentiontype = colorowstt with pt_tasks = ['denoising']
 ```bash
 python my_train.py \
   --dset_id 11 \
@@ -103,7 +103,8 @@ python my_train.py \
   --cuda_device 0 \
   --use_default_model \
   --missing_rate 0.5 \
-  --missing_type mcar
+  --missing_type mcar \
+  --pt_aug cutmix
 ```
 
 Adjust parameters as needed. Refer to the command-line argument help for more details:

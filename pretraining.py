@@ -64,7 +64,6 @@ def DeepIFSAC_pretrain(model, cat_idxs, X_train, y_train, X_train_imp, train_mas
     # Set up the corruptor for noise augmentation
     corruptor_settings = {
         'method': 'draw',
-        'corruption_rate': 0.6,
         'missing': opt.missing_rate,
         'missing_type': 'mcar',
         'mice': 'LinearRegression'
@@ -90,7 +89,6 @@ def DeepIFSAC_pretrain(model, cat_idxs, X_train, y_train, X_train_imp, train_mas
             # Unpack and move batch to device
             x_categ, x_cont, x_categ_imp, x_cont_imp, _, cat_mask, con_mask, train_mask_batch = \
                 [d.to(device) for d in batch]
-
             # Data augmentation: cutmix and mixup
             if 'cutmix' in opt.pt_aug:
                 x_categ_corr, x_cont_corr = add_noise(
@@ -149,7 +147,7 @@ def DeepIFSAC_pretrain(model, cat_idxs, X_train, y_train, X_train_imp, train_mas
                         l2 = l2.sum() / N
                 else:
                     l2 = 0
-                l1 = sum(criterion1(cat_outs[j], x_categ[:, j]) for j in range(1, x_categ.shape[-1]))
+                l1 = sum(criterion1(cat_outs[j], x_categ_imp[:, j]) for j in range(1, x_categ_imp.shape[-1]))
                 loss += opt.lam2 * l1 + opt.lam3 * l2
 
             loss.backward()
@@ -193,15 +191,15 @@ def DeepIFSAC_pretrain(model, cat_idxs, X_train, y_train, X_train_imp, train_mas
         all_original_data = (all_original_data * std) + mean
         # Combine observed and missing parts
         all_predictions = (all_original_data * observed_entries) + (all_predictions * train_mask_t)
+        
         mse_con = np.mean((all_original_data - all_predictions) ** 2, axis=0)
-        feature_means = np.abs(np.mean(all_original_data, axis=0))
-        # feature_variances = torch.where(torch.var(all_original_data, dim=0) == 0,
-        #                             torch.ones_like(torch.var(all_original_data, dim=0)),
-        #                             torch.var(all_original_data, dim=0))
-        feature_means[feature_means == 0] = 1  # avoid division by zero
-        nrmse_con = np.mean(np.sqrt(mse_con) / feature_means)
+        feature_variances = np.var(all_original_data, axis=0)
+        feature_variances[feature_variances == 0] = 1  # avoid divide-by-zero
+
+        nrmse_con = np.mean(np.sqrt(mse_con) / feature_variances)
         nrmse_cat = 0.0  # Not computed in this refactor
-        print('NRMSE for Continuous Features:', nrmse_con)
+        print('NRMSE for Continuous Features on the Train set:', nrmse_con)
+        print('NRMSE for Categorical Features on the Train set:', nrmse_cat)
     else:
         nrmse_con, nrmse_cat = 0.0, 0.0
 

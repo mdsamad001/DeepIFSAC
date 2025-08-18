@@ -1,6 +1,31 @@
 # 1. DeepIFSAC
 This is the official implementation of paper titled, "DeepIFSAC: Deep Imputation of Missing Values Using Feature and Sample Attention within Contrastive Framework".
 
+---
+
+## 📖 Paper  
+If you use this repository, please cite our paper:  
+
+> Kowsar, I., Rabbani, S. B., Hou, Y., & Samad, M. D. (2025).  
+> **DeepIFSAC: Deep imputation of missing values using feature and sample attention within contrastive framework.**  
+> *Knowledge-Based Systems, 318,* 113506.  
+> [https://doi.org/10.1016/j.knosys.2025.113506](https://doi.org/10.1016/j.knosys.2025.113506)
+
+---
+
+## 📌 Citation (BibTeX)  
+
+```bibtex
+@article{kowsar2025deepifsac,
+  title={DeepIFSAC: Deep imputation of missing values using feature and sample attention within contrastive framework},
+  author={Kowsar, Ibna and Rabbani, Shourav B and Hou, Yina and Samad, Manar D},
+  journal={Knowledge-Based Systems},
+  volume={318},
+  pages={113506},
+  year={2025},
+  publisher={Elsevier}
+}
+```
 **DeepIFSAC** is a deep learning framework for tabular data that leverages attention-based architecture within a contrastive learning framework for missing value imputation. This repository provides code for data processing, training the DeepIFSAC model for missing value imputation on Tabular data set and a real-world EHR data set.
 
 ---

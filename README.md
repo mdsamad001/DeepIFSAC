@@ -68,7 +68,7 @@ conda env create -f difsac_env.yml
 conda activate DeepIFSAC
 ```
 
-Ensure that you have PyTorch installed with the proper CUDA version if you intend to use a GPU. All dependencies and their versions are specified in the `environment.yaml` file.
+Ensure that you have PyTorch installed with the proper CUDA version if you intend to use a GPU. All dependencies and their versions are specified in the `environment.yml` file.
 
 ---
 

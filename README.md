@@ -55,7 +55,7 @@ DeepIFSAC is designed to work with tabular datasets (e.g., from OpenML). The mod
 ### 4.1 Clone the Repository
 
 ```bash
-git clone https://github.com/yourusername/DeepIFSAC.git
+git clone https://github.com/mdsamad001/DeepIFSAC.git
 cd DeepIFSAC
 ```
 

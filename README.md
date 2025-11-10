@@ -64,7 +64,7 @@ cd DeepIFSAC
 If you use Conda, create an environment using the provided YAML file:
 
 ```bash
-conda env create -f environment.yaml
+conda env create -f difsac_env.yml
 conda activate DeepIFSAC
 ```
 
